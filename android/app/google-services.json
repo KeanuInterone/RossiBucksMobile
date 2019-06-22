@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "254854423630",
+    "firebase_url": "https://rossi-bucks.firebaseio.com",
+    "project_id": "rossi-bucks",
+    "storage_bucket": "rossi-bucks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254854423630:android:f6e5e2cb17712626",
+        "android_client_info": {
+          "package_name": "com.rossignol.rossibucks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254854423630-vgqrufb7kulqtnmiv1dqvueog2aa575r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU_URZzb9vdevS1WNKzCfkUZr1lkHUgSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254854423630-vgqrufb7kulqtnmiv1dqvueog2aa575r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
