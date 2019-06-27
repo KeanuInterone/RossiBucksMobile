@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rossi_bucks/main.dart';
 import 'package:fast_qr_reader_view/fast_qr_reader_view.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:rossi_bucks/models/product.dart';
+import 'package:rossi_bucks/screens/review_order_screen.dart';
 
 class ScanScreen extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class ScanScreen extends StatefulWidget {
 class ScanScreenState extends State<ScanScreen> {
   QRReaderController controller;
   List<String> codes = [];
+  List<Product> products = [];
   AudioCache player;
   String scanSound = "scan_sound.mp3";
 
@@ -26,8 +29,9 @@ class ScanScreenState extends State<ScanScreen> {
         (dynamic value) {
       print(value);
       player.play(scanSound);
-      codes.add(value.toString());
-      setState(() {});
+
+      _addProductWithValue(value);
+
       Future.delayed(const Duration(seconds: 1), controller.startScanning);
     });
     controller.initialize().then((_) {
@@ -57,16 +61,18 @@ class ScanScreenState extends State<ScanScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(231, 36, 34, 1),
         title: Text("Scan"),
       ),
       body: Stack(
         children: <Widget>[
           QRReaderPreview(controller),
           ListView.builder(
-            itemCount: codes.length,
+            itemCount: products.length,
             itemBuilder: (context, index) {
+              Product product = products[index];
               return Text(
-                codes[index],
+                "${product.name} +${product.points.toString()}",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -74,8 +80,41 @@ class ScanScreenState extends State<ScanScreen> {
               );
             },
           ),
+          Positioned(
+            bottom: 20,
+            right: 20,
+            left: 20,
+            height: 80,
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReviewOrderScreen(
+                          products: products,
+                        ),
+                  ),
+                );
+              },
+              child: Text(
+                "REVIEW ORDER",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Color.fromRGBO(231, 36, 34, 1),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  void _addProductWithValue(String ean) {
+    Product product = Product.eanDict[ean];
+    if (product != null) {
+      products.add(product);
+      setState(() {});
+    }
   }
 }
